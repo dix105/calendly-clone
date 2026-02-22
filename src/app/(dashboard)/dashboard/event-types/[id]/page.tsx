@@ -31,7 +31,6 @@ export default function EditEventTypePage({ params }: { params: { id: string } }
     duration_minutes: 30,
     color: COLORS[0],
     price_cents: 0,
-    location_type: 'google_meet',
     is_active: true,
   })
 
@@ -67,7 +66,6 @@ export default function EditEventTypePage({ params }: { params: { id: string } }
       duration_minutes: data.duration_minutes,
       color: data.color,
       price_cents: data.price_cents,
-      location_type: data.location_type,
       is_active: data.is_active,
     })
     setLoading(false)

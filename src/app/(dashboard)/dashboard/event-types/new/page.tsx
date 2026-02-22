@@ -29,7 +29,6 @@ export default function NewEventTypePage() {
     duration_minutes: 30,
     color: COLORS[0],
     price_cents: 0,
-    location_type: 'google_meet',
   })
 
   const generateSlug = (title: string) => {
