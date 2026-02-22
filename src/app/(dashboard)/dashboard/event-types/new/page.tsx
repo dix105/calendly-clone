@@ -47,19 +47,20 @@ export default function NewEventTypePage() {
 
     const slug = formData.slug || generateSlug(formData.title)
 
+    const insertData = {
+      user_id: session.user.id,
+      title: formData.title,
+      slug,
+      description: formData.description || null,
+      duration_minutes: formData.duration_minutes,
+      color: formData.color,
+      price_cents: formData.price_cents,
+      is_active: true,
+    }
+
     const { data, error } = await supabase
       .from('event_types')
-      .insert({
-        user_id: session.user.id,
-        ...formData,
-        slug,
-        is_active: true,
-        currency: 'USD',
-        min_notice_hours: 24,
-        max_days_in_advance: 30,
-        buffer_minutes_before: 0,
-        buffer_minutes_after: 0,
-      })
+      .insert(insertData)
       .select()
       .single()
 
