@@ -141,7 +141,7 @@ export default function EventBookingPage({
       alert('Payment integration coming soon! Booking created as pending.')
     }
 
-    router.push(`/book/${params.username}/success?booking=${data.id}`)
+    router.push(`/book/${params.username}/success?booking=${data.id}&username=${params.username}`)
   }
 
   if (loading) {
