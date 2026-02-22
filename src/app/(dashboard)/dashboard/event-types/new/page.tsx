@@ -45,6 +45,31 @@ export default function NewEventTypePage() {
       return
     }
 
+    // Ensure profile exists
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('id', session.user.id)
+      .single()
+
+    if (!profile) {
+      // Create profile if missing
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .insert({
+          id: session.user.id,
+          username: session.user.email?.split('@')[0] || 'user',
+          full_name: session.user.user_metadata?.full_name || '',
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        })
+      
+      if (profileError) {
+        setLoading(false)
+        alert('Error creating profile: ' + profileError.message)
+        return
+      }
+    }
+
     const slug = formData.slug || generateSlug(formData.title)
 
     const insertData = {
