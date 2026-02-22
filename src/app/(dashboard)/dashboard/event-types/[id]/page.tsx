@@ -46,15 +46,22 @@ export default function EditEventTypePage({ params }: { params: { id: string } }
       return
     }
 
+    // First check if event exists
     const { data, error } = await supabase
       .from('event_types')
       .select('*')
       .eq('id', params.id)
-      .eq('user_id', session.user.id)
       .single()
 
     if (error || !data) {
       alert('Event type not found')
+      router.push('/dashboard/event-types')
+      return
+    }
+
+    // Check ownership
+    if (data.user_id !== session.user.id) {
+      alert('You do not have permission to edit this event type')
       router.push('/dashboard/event-types')
       return
     }
