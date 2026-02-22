@@ -53,6 +53,12 @@ export default function NewEventTypePage() {
         user_id: session.user.id,
         ...formData,
         slug,
+        is_active: true,
+        currency: 'USD',
+        min_notice_hours: 24,
+        max_days_in_advance: 30,
+        buffer_minutes_before: 0,
+        buffer_minutes_after: 0,
       })
       .select()
       .single()
