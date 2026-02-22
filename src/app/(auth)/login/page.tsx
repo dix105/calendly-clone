@@ -14,10 +14,14 @@ export default function LoginPage() {
 
   const handleGoogleSignIn = async () => {
     setLoading(true)
+    // Use a fixed redirect URL to avoid mismatch issues
+    // Make sure this EXACT URL is in Google Cloud Console OAuth settings
+    const redirectUrl = process.env.NEXT_PUBLIC_REDIRECT_URL || `${window.location.origin}/api/auth/callback`
+    
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/api/auth/callback`,
+        redirectTo: redirectUrl,
         scopes: 'https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/calendar.events',
       },
     })
